@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { LayoutDashboard, Users, ArrowUpRight } from "lucide-react";
+import { Grid2X2, Layers, Plus } from "lucide-react";
 import { requireUser } from "@/lib/access";
 import { db } from "@/lib/db";
 import { logout } from "@/lib/actions";
+import { WorkspaceNav } from "@/components/workspace-nav";
 export default async function Workspace({
   children,
 }: {
@@ -11,6 +12,9 @@ export default async function Workspace({
   const user = await requireUser();
   const teams = await db.team.findMany({
     where: { members: { some: { userId: user.id } } },
+    include: {
+      projects: { select: { id: true, name: true }, orderBy: { name: "asc" } },
+    },
     orderBy: { name: "asc" },
   });
   return (
@@ -18,36 +22,26 @@ export default async function Workspace({
       <a href="#main" className="skip">
         Skip to content
       </a>
-      <aside className="sidebar">
+      <header className="app-header">
         <Link href="/dashboard" className="brand">
-          <span className="brand-icon">S</span>Sprintly
-          <span className="beta">MVP</span>
+          <Grid2X2 size={17} className="app-switcher" />
+          <Layers size={23} className="brand-symbol" />
+          Sprintly
         </Link>
-        <div className="workspace-label">YOUR WORKSPACE</div>
-        <nav>
-          <Link className="nav-link" href="/dashboard">
-            <LayoutDashboard size={17} />
-            Overview
-          </Link>
-          <div className="nav-heading">
-            Teams <Users size={14} />
-          </div>
-          {teams.map((t) => (
-            <Link className="nav-link" key={t.id} href={`/teams/${t.id}`}>
-              <span className="team-icon">{t.name[0].toUpperCase()}</span>
-              <span>{t.name}</span>
-            </Link>
-          ))}
-          {!teams.length && (
-            <p className="sidebar-empty">Your teams will appear here.</p>
-          )}
-        </nav>
+        <span className="header-workspace">Engineering workspace</span>
+        <Link href="/dashboard#new-team" className="btn header-create">
+          <Plus size={15} />
+          Create team
+        </Link>
+        <span className="header-divider" />
+        <span className="header-user">{user.name}</span>
+        <span className="avatar" title={user.email ?? undefined}>
+          {user.name?.[0]?.toUpperCase()}
+        </span>
+      </header>
+      <aside className="sidebar">
+        <WorkspaceNav teams={teams} />
         <div className="sidebar-bottom">
-          <div className="tip">
-            A little structure.
-            <br />A lot more momentum.
-            <ArrowUpRight size={17} />
-          </div>
           <div className="profile">
             <span className="avatar">{user.name?.[0]?.toUpperCase()}</span>
             <div>
@@ -61,12 +55,6 @@ export default async function Workspace({
         </div>
       </aside>
       <main id="main" className="main">
-        <header className="topbar">
-          <span>
-            Workspace <span className="muted">/ Sprintly</span>
-          </span>
-          <span className="live-dot">Let’s make progress</span>
-        </header>
         <div className="content">{children}</div>
       </main>
     </div>

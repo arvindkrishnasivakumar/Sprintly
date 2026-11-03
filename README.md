@@ -44,7 +44,7 @@ Deploy as a Node.js Next.js app with a managed PostgreSQL database. Set `DATABAS
 
 ## Features and boundaries
 
-Signup/login; multiple teams; owner-managed membership; project and sprint creation/editing; task creation/editing/assignment; Kanban drag-and-drop and accessible status menus; sprint metrics. Dates use UTC calendar days. Members can manage work within their own teams. JWT sessions last seven days. Login and registration attempts are throttled per normalized email in PostgreSQL.
+Signup/login; multiple teams; owner-managed membership; project and sprint creation/editing; task creation/editing/assignment; grouped task lists with search and filters, a task detail panel, Kanban drag-and-drop and accessible status menus; sprint metrics. Dates use UTC calendar days. Members can manage work within their own teams. JWT sessions last seven days. Login and registration attempts are throttled per normalized email in PostgreSQL.
 
 Password recovery, email verification, email invitations, deletion, and live multi-user updates are outside this MVP. For public rollout, plan account recovery and additional edge/IP abuse controls. Expired `AuthAttempt` rows can be periodically removed with `DELETE FROM "AuthAttempt" WHERE "expiresAt" < NOW()`.
 

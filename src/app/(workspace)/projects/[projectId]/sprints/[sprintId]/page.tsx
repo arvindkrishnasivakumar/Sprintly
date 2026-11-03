@@ -4,9 +4,8 @@ import { requireSprint } from "@/lib/access";
 import { db } from "@/lib/db";
 import { sprintMetrics } from "@/lib/metrics";
 import { label } from "@/lib/validation";
-import { saveSprint, saveTask } from "@/lib/actions";
-import { ActionForm } from "@/components/forms";
-import { SprintForm, TaskFields } from "@/components/entity-forms";
+import { saveSprint } from "@/lib/actions";
+import { SprintForm } from "@/components/entity-forms";
 import { Board } from "@/components/board";
 export default async function SprintPage({
   params,
@@ -45,21 +44,16 @@ export default async function SprintPage({
       </Link>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">SPRINT WORKSPACE</p>
+          <p className="eyebrow">SPRINT</p>
           <h1>
             {sprint.name} <span className="badge">{label(sprint.status)}</span>
           </h1>
-          <p className="muted">
-            {sprint.goal || "Set a goal to keep your team focused."}
-          </p>
+          <p className="muted">{sprint.goal || "No sprint goal set."}</p>
           <small className="muted">
             {sprint.startDate.toISOString().slice(0, 10)} →{" "}
             {sprint.endDate.toISOString().slice(0, 10)} · Dates in UTC
           </small>
         </div>
-        <a className="btn" href="#new-task">
-          + Add task
-        </a>
       </div>
       <div className="stats sprint-stats">
         {stats.map(([name, value]) => (
@@ -87,16 +81,7 @@ export default async function SprintPage({
           dueDate: t.dueDate?.toISOString() ?? null,
         }))}
       />
-      <div className="two-column">
-        <section id="new-task" className="card">
-          <h2>Add a task</h2>
-          <ActionForm
-            action={saveTask.bind(null, sprintId, null)}
-            submit="Create task"
-          >
-            <TaskFields members={members} />
-          </ActionForm>
-        </section>
+      <div className="sprint-settings">
         <section className="card">
           <details>
             <summary>Edit sprint</summary>

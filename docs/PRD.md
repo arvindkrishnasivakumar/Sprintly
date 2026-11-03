@@ -15,7 +15,7 @@ Small student engineering teams working on course projects, hackathons, club pro
 - Team projects with name, description, status (Active, On Hold, Completed), and creation date.
 - Project sprints with name, goal, start/end dates, and Planned/Active/Completed status.
 - Tasks with title, description, optional team-member assignee, Low/Medium/High priority, Backlog/In Progress/Review/Done status, optional due date, and integer story points (0–100).
-- Four-column Kanban with drag-and-drop and a keyboard/touch-accessible status selector. Task editing persists all fields.
+- Grouped task list with search, assignee/status filters, collapsible status groups, and a task detail editor. A Board tab provides four-column Kanban with drag-and-drop and keyboard/touch-accessible status selectors. Task editing persists all fields.
 - Sprint metrics: total/completed tasks, completion percentage, total/completed points, overdue unfinished tasks, and days remaining.
 - Responsive minimal sidebar UI, empty/loading/error states, and server validation.
 

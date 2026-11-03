@@ -23,10 +23,10 @@ export default async function Dashboard() {
     <>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">WORKSPACE OVERVIEW</p>
-          <h1>Good to see you, {user.name?.split(" ")[0]}.</h1>
+          <p className="eyebrow">WORKSPACE</p>
+          <h1>Your work</h1>
           <p className="muted">
-            Your teams, your projects, your next step forward.
+            Manage your teams, projects, and active sprints.
           </p>
         </div>
         <a className="btn" href="#new-team">
@@ -64,7 +64,7 @@ export default async function Dashboard() {
               </div>
               <h3>{t.name}</h3>
               <p className="muted clamp">
-                {t.description || "A space to build together."}
+                {t.description || "No description."}
               </p>
               <div className="card-footer">
                 {t._count.members} members{" "}
@@ -76,13 +76,13 @@ export default async function Dashboard() {
         {!teams.length && (
           <div className="empty">
             <Users />
-            <h3>Great work starts with a team</h3>
+            <h3>No teams yet</h3>
             <p>Create your first team below, then add your teammates.</p>
           </div>
         )}
       </section>
       <section>
-        <h2>In motion</h2>
+        <h2>Active sprints</h2>
         {active.length ? (
           <div className="list">
             {active.map((s) => (
@@ -107,7 +107,7 @@ export default async function Dashboard() {
       </section>
       <section id="new-team" className="card form-panel">
         <h2>Create a team</h2>
-        <p className="muted">Give your next collaboration a home.</p>
+        <p className="muted">Create a workspace for your team.</p>
         <ActionForm action={createTeam} submit="Create team">
           <Field label="Team name" name="name" required maxLength={100} />
           <TextArea label="Description" name="description" />
